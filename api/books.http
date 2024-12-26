@@ -1,0 +1,14 @@
+### /books
+GET http://localhost:3000/books
+
+### /books/:id
+GET http://localhost:3000/books/13
+
+### /books/:id > books.length = Book not found
+GET http://localhost:3000/books/200
+
+### /books?offset=1
+GET http://localhost:3000/books?offset=1&limit=10
+
+### /books?offset=NUMBER&amount=NUMBER
+GET http://localhost:3000/books?offset=3&limit=10
