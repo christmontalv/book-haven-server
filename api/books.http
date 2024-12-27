@@ -12,3 +12,6 @@ GET http://localhost:3000/books?offset=1&limit=10
 
 ### /books?offset=NUMBER&amount=NUMBER
 GET http://localhost:3000/books?offset=3&limit=10
+
+### /books?name=adventure
+GET http://localhost:3000/books?name=To Kill a Mockingbird

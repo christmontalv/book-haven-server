@@ -16,17 +16,39 @@ booksRouter.get("/:id", (req, res) => {
   }
 });
 
-booksRouter.get("/", (req, res) => {
-  let { offset, limit } = req.query;
+booksRouter.get(
+  "/",
+  (req, res, next) => {
+    let { offset, limit } = req.query;
 
-  if (offset && limit) {
+    if (!offset && !limit) {
+      return next();
+    }
+
     const pagination = (offset - 1) * limit;
     const amount = offset * limit;
 
     const books = data.slice(pagination, amount);
     res.json(books);
-  } else {
+  },
+  (req, res, next) => {
+    let { name } = req.query;
+
+    if (!name) {
+      next();
+    }
+
+    const bookByName = data.find(
+      (book) => book.title.toLowerCase() === name.toLowerCase()
+    );
+
+    if (!bookByName) {
+      res.status(404).send("Book not found");
+    }
+    res.json(bookByName);
+  },
+  (req, res) => {
     const books = data.slice(0, 10);
     res.json(books);
   }
-});
+);
