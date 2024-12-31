@@ -17,10 +17,10 @@ app.use([json()]);
 
 //App Routes:
 app.all("/", (req, res) => {
-  res.contentType("text/plain").send("Book Haven Server Home");
+  res.contentType("text/plain").send("Book Haven Server");
 });
-app.use("/authentication", authRouter);
 app.use("/books", booksRouter);
+app.use("/authentication", authRouter);
 
 //not found:
 app.use((req, res) => {
