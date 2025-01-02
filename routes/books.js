@@ -7,3 +7,4 @@ export const booksRouter = Router();
 //Handlers:
 booksRouter.get("/", [validationPaginationParams, BookController.getBooks]);
 booksRouter.get("/:id", BookController.getBookById);
+booksRouter.get("/genders", BookController.getBooksByGenders);

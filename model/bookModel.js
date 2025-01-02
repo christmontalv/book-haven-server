@@ -1,6 +1,6 @@
 import { pool } from "../db/index.js";
 
-export class BookMovel {
+export class BookModel {
   static async getBooks(offset, limit) {
     try {
       const query = await pool.query(
@@ -9,15 +9,26 @@ export class BookMovel {
 
       return query.rows;
     } catch (error) {
-      //#TODO: Request to error log
-      return new Error("Cannot make the query to DATABASE.");
+      return new Error("Cannot get books.");
     }
   }
   static async getBookById(id) {
     try {
-      const query = await pool.query(`SELECT * FROM books WHERE id = ${id}`);
+      const query = await pool.query(`SELECT * FROM books WHERE id = "hehe"`);
       return query.rows;
-    } catch (error) {}
+    } catch (error) {
+      return new Error("Cannot get book.");
+    }
   }
-  static getBooksByGenders() {}
+  static async getBooksByGenders(genders = []) {
+    try {
+      const query = await pool.query(
+        `SELECT * FROM books_genders WHERE id = ${genders}`
+      );
+      return query.rows;
+    } catch (error) {
+      console.log(error.message);
+      return new Error("Cannot get books.");
+    }
+  }
 }

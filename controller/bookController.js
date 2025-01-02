@@ -1,6 +1,5 @@
 import { request, response } from "express";
-import { books as data } from "../data.js";
-import { BookMovel } from "../model/index.js";
+import { BookModel } from "../model/index.js";
 
 export class BookController {
   static async getBooks(req = request, res = response) {
@@ -11,21 +10,25 @@ export class BookController {
       end: limit,
     };
 
-    const books = await BookMovel.getBooks(start, end);
+    const books = await BookModel.getBooks(start, end);
     res.json(books);
   }
 
   static async getBookById(req = request, res = response) {
     const id = Number(req.params.id);
+    const book = await BookModel.getBookById(id);
 
-    const book = data.find((item) => item.id === id);
-
-    if (!book) {
-      return res.status(404).json({ ok: false, msg: "Book not found" });
+    if (book instanceof Error) {
+      return res.status(404).json({ ok: false, msg: book.message });
     }
 
     res.json(book);
   }
 
-  static async getBooksByGenders() {}
+  static async getBooksByGenders(req = request, res = response) {
+    const { genders, offset, limit } = req.query;
+
+    console.log(genders);
+    res.json({ ok: true });
+  }
 }
